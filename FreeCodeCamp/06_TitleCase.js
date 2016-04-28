@@ -3,21 +3,13 @@ of the word is in lower case.
 For the purpose of this exercise, you should also capitalize connecting words like "the" and "of".
 */
 function titleCase(str) {
-  var words = str.toLowerCase().split(" ");
-  var output = "";
+  var words = str.split(" ");
   for(var i = 0; i < words.length; i++){
-    for(var j = 0; j < words[i].length; j++){
-      if(j === 0){
-        output += words[i][0].toUpperCase();
-      }
-      else{
-        output += words[i][j];
-      }
-    }
-    if(i+1 !== words.length){
-      output += " ";
-    }
+    var x = words[i].slice(0, 1).toUpperCase();
+    words[i] = x + words[i].slice(1, words[i].length).toLowerCase();
   }
-  return output;
+  str = words.join(" ");
+  return str;
 }
+
 titleCase("I'm a little tea pot");
