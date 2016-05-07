@@ -40,7 +40,8 @@ class DistanceBetweenStrings{
                 if (!mapB.ContainsKey(letterSet[i])) {
                     mapB[letterSet[i]] = 0;
                 }
-                result += Math.Pow(Math.Max(mapA[letterSet[i]], mapB[letterSet[i]]) - Math.Min(mapA[letterSet[i]], mapB[letterSet[i]]), 2);
+                result += Math.Pow(Math.Max(mapA[letterSet[i]], mapB[letterSet[i]]) - Math.Min(mapA[letterSet[i]], 
+                mapB[letterSet[i]]), 2);
             }
             return (int)result;
         }
