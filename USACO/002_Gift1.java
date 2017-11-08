@@ -3,45 +3,54 @@ ID: xervean1
 LANG: JAVA
 TASK: gift1
 */
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 public class gift1 {
-	public static void main (String [] args) throws IOException {
-	    BufferedReader input = new BufferedReader(new FileReader("gift1.in"));
-	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("gift1.out")));
-	    Map<String, Integer> map = new HashMap<String, Integer>();
-	    List<String> list = new ArrayList<String>();
-	    int T = Integer.parseInt(input.readLine());
-	    for(int i = 0; i < T; i++){
-	    	String temp = input.readLine();
-	    	map.put(temp, 0);
-	    	list.add(temp);
-	    }
-	    while(T-- > 0){
-	    	String name = input.readLine();
-	    	String[] nums = input.readLine().split(" ");
-	    	int money = Integer.parseInt(nums[0]);
-	    	int friends = Integer.parseInt(nums[1]);
-	    	if(friends == 0){
-	    		int update = map.get(name);
-	    		update += money;
-	    		map.put(name, update);
-	    		continue;
-	    	}
-	    	int total = money / friends;
-	    	int update = map.get(name);
-	    	update -= total * friends;
-	    	map.put(name, update);
-	    	for(int i = 0; i < friends; i++){
-	    		String key = input.readLine();
-	    		update = map.get(key);
-	    		update += total;
-	    		map.put(key, update);
-	    	}
-	    }
-	    for(int i = 0; i < list.size(); i++){
-	    	out.println(list.get(i) + " " + map.get(list.get(i)));
-	    }
-	    out.close();
-	  }
+  public static void main(String[] args) throws IOException {
+    Scanner input = new Scanner(new BufferedReader(new FileReader("gift1.in")));
+    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("gift1.out")));
+    List<String> names = new ArrayList<String>();
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    int T = Integer.parseInt(input.nextLine());
+    for(int i = 0; i < T; i++) {
+      String temp = input.nextLine();
+      names.add(temp);
+      map.put(temp, 0);
+    }
+    while(T-- > 0) {
+      String name = input.nextLine();
+      String[] nums = input.nextLine().split(" ");
+      int amount = Integer.parseInt(nums[0]);
+      int friends = Integer.parseInt(nums[1]);
+      int gift = -1, left = -1;
+      if(friends != 0) {
+        gift = amount / friends;
+        left = amount % friends;
+      }
+      else {
+        gift = 0;
+        left = amount;
+      }
+      map.put(name, map.get(name) - amount + left);
+      for(int i = 0; i < friends; i++) {
+        String current = input.nextLine();
+        map.put(current, map.get(current) + gift);
+      }
+    }
+    for(int i = 0; i < names.size(); i++) {
+      out.println(names.get(i) + " " + map.get(names.get(i)));
+    }
+    out.close();
+  }
 }
